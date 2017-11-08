@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RealTimeChat</string>
+    <string name="title_activity_chat_room">ChatRoom</string>
 </resources>
