@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         etInput = (EditText) findViewById(R.id.etInput);
         lvChat = (ListView) findViewById(R.id.lvChat);
+        btSend = findViewById(R.id.btSend);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
