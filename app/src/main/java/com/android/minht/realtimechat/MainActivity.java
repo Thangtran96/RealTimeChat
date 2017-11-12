@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,26 +21,19 @@ public class MainActivity extends AppCompatActivity {
     EditText etInput;
     ListView lvChat;
     private static final String TAG = "RealTimeChatApp";
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getControls();
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-//        myRef.setValue("Hello, World!");
+        final DatabaseReference myRef = database.getReference("message");
+        myRef.setValue("Hello, World!");
 
-        etInput = (EditText) findViewById(R.id.etInput);
-        lvChat = (ListView) findViewById(R.id.lvChat);
-        btSend = findViewById(R.id.btSend);
-        btSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                etInput.setText("");
-            }
-        });
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -48,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
                 Log.d(TAG, "Value is: " + value);
+                toast = Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
@@ -57,8 +53,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btSend = findViewById(R.id.btSend);
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
+    public void getControls(){
+        etInput = (EditText) findViewById(R.id.etInput);
+        lvChat = (ListView) findViewById(R.id.lvChat);
+    }
 
 }
